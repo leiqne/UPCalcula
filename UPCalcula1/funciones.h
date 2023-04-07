@@ -1,27 +1,33 @@
 #pragma once
+#ifndef FUNCIONES_H
+#define FUNCIONES_H
+
 #include <string>
 #include <vector>
 #include "conjunto.h"
+#include "helpers.h"
 
-namespace Funciones2 {
-    inline std::vector<std::pair<std::string, std::string>> calcularProdCartesiano(std::vector<std::string> conjunto) {
-        std::vector<std::pair<std::string, std::string>> resultado;
-        // (1, "a", 0.1)
-        //make_pair(1, "a", 0.1);
-        int n = conjunto.size();
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                resultado.push_back(std::make_pair(conjunto[i], conjunto[j]));
-            }
-        }
-        return resultado;
-    }
+namespace Funciones {
+	using productoPair = std::vector<std::pair<std::string, std::string>>;
 
-    inline Conjunto2 parseConjunto(std::string conjunto_raw) {
-        Conjunto2 conjunto = Conjunto2(conjunto_raw);
-        conjunto.parse();
-        return conjunto;
-    }
+	inline productoPair calcularProdCartesiano(std::vector< std::vector<std::string>> conjunto) {
+		productoPair resultado;
+		size_t n = conjunto.size();
+		for (int i = 0; i < n; i++) {
+			std::string c1 = conjunto[i].size() > 1 ? vectorToCString(conjunto[i]) : conjunto[i][0];
+			for (int j = 0; j < n; j++) {
+				std::string c2 = conjunto[i].size() > 1 ? vectorToCString(conjunto[j]) : conjunto[j][0];
+				resultado.push_back(std::make_pair(c1, c2));
+			}
+		}
+		return resultado;
+	}
+
+	Conjunto parseConjunto(std::string conjunto_raw) {
+		Conjunto conjunto = Conjunto(conjunto_raw);
+		conjunto.parse();
+		return conjunto;
+	}
 
 };
-
+#endif
