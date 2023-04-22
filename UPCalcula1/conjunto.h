@@ -35,7 +35,7 @@ public:
     inline Conjunto pairToConjunto(conjuntoPair pair);
     conjuntoType parse();
     conjuntoType getConjunto();
-    std::vector<tiposRelacion> clasificarR(Conjunto);
+    std::vector<tiposRelacion> clasificarR(Conjunto& R);
 
     int size();
 
@@ -46,14 +46,20 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const Conjunto& conjunto);
     operator conjuntoType() const;
+    void push_back(std::string elemento);
     ~Conjunto() = default;
 
 private:
     std::string conjunto_raw;
-    conjuntoType conjunto;
+    conjuntoType conjunto = { {} };
 
     bool esSimetrica(Conjunto R);
+    bool esAsimetrica(Conjunto R);
+    bool esEquivalente(Conjunto R);
+    bool esAntisimetrica(Conjunto R);
     bool esReflexiva(Conjunto R);
+    
+
 };
 
 Conjunto::Conjunto(std::string conjunto_raw_) : conjunto_raw(conjunto_raw_) {}
@@ -125,10 +131,16 @@ conjuntoType Conjunto::parse() {
 
 conjuntoType Conjunto::getConjunto() { return conjunto; }
 
-std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto R) {
+std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto &R) {
     std::vector<tiposRelacion> cumple;
-    if (esReflexiva(R)) cumple.push_back(REFLEXIVA);
+    if (esReflexiva(R)) {
+        std::cout << "hoia1" << std::endl; cumple.push_back(REFLEXIVA);
+    }
+    
     if (esSimetrica(R)) cumple.push_back(SIMETRICA);
+    std::cout << "hoia2" << std::endl;
+    if (esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
+    std::cout << "hoia3"<<std::endl;
     return cumple;
 }
 
@@ -143,6 +155,7 @@ bool Conjunto::include(elementoPair sub_conjunto) {
 }
 
 bool Conjunto::esReflexiva(Conjunto R) {
+    std::cout<<R.getConjunto().at(0).size();
     for (auto elemento : conjunto) {
         if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
             return false;
@@ -176,5 +189,42 @@ std::ostream& operator<<(std::ostream& os, const Conjunto& conjunto) {
 }
 
 Conjunto::operator conjuntoType() const { return conjunto; }
+bool Conjunto::esAsimetrica(Conjunto R) {
+    for (auto elemento : R.conjunto) {
+        if (elemento[0] == elemento[1]) continue;
+        for (auto elemento2 : R.conjunto) {
+            if (elemento == elemento2) continue;
+            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0]) return false;
+        }
+    }
+    return true;
+}
+bool Conjunto::esEquivalente(Conjunto R) {
+    return esReflexiva(R) && esSimetrica(R);
+}
+void Conjunto::push_back(std::string elemento) {
+    elemento.erase(std::remove_if(elemento.begin(), elemento.end(), [](char c) {
+        return c == '(' || c == ')';
+        }), elemento.end());
+    if (elemento.length() == 1) conjunto.push_back({ elemento });
+
+    std::stringstream ss(elemento);
+    std::string element;
+   std:: vector<std::string> elementos;
+    while (std::getline(ss, element, ',')) {
+        elementos.push_back(element);
+    }
+    conjunto.push_back(elementos);
+}
+bool Conjunto::esAntisimetrica(Conjunto R) {
+    for (auto elemento : R.conjunto) {
+        if (elemento[0] == elemento[1]) continue;
+        for (auto elemento2 : R.conjunto) {
+            if (elemento == elemento2) continue;
+            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0]) return false;
+        }
+    }
+    return true;
+}
 
 #endif // CONJUNTO_H
