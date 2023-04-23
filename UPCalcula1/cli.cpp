@@ -32,6 +32,20 @@ int main(int argc, char* argv[]) {
 				);
 		}
 	}
+	else if (args.at(0) == "clasificar") {
+		if (args.size() != 5) {
+			cout << "Argumentos inválidos" << endl;
+			return EXIT_FAILURE;
+		}
+		auto begin = args.begin();
+		Conjunto conjunto, relacion;
+		for (auto arg = begin + 1; arg != args.end(); arg++) {
+			if (arg == "-c") conjunto = Funciones::parseConjunto(++arg);
+			else if (arg == '-r') relacion = Funciones::parseConjunto(++args);
+		}
+
+		cout << conjunto << endl << relacion << endl;
+	}
 	else if (args.at(0) == "test") {
 		string conjunto_raw = args.size() > 1 ? args.at(1) : "(3,9,0)";
 		cout << "Conjunto de entrada: " << conjunto_raw << endl;

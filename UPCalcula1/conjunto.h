@@ -14,11 +14,12 @@ using conjuntoType = std::vector<elementosType>;
 using elementoPair = std::pair<std::string, std::string>;
 using conjuntoPair = std::vector<elementoPair>;
 
-enum tiposRelacion { REFLEXIVA, SIMETRICA, ANTISIMETRICA, TRANSITIVA, EQUIVALENCIA, ORDEN_PARCIAL };
+enum tiposRelacion { REFLEXIVA, SIMETRICA, ASIMETRICA, ANTISIMETRICA, TRANSITIVA, EQUIVALENCIA, ORDEN_PARCIAL };
 
 std::map<tiposRelacion, std::string> tipos = {
     {tiposRelacion::REFLEXIVA, "Reflexiva"},
     {tiposRelacion::SIMETRICA, "Simetrica"},
+    {tiposRelacion::ASIMETRICA, "ASimetrica"},
     {tiposRelacion::ANTISIMETRICA, "Antisimetrica"},
     {tiposRelacion::TRANSITIVA, "Transitiva"},
     {tiposRelacion::EQUIVALENCIA, "Equivalencia"},
@@ -129,11 +130,21 @@ conjuntoType Conjunto::parse() {
 
 conjuntoType Conjunto::getConjunto() { return conjunto; }
 
-std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto &R) {
+std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
     std::vector<tiposRelacion> cumple;
-    if (esReflexiva(R))cumple.push_back(REFLEXIVA);
+    bool es_asimetrica = false, es_reflexiva = false;
+    if (esReflexiva(R)) {
+        es_reflexiva = true;
+        cumple.push_back(REFLEXIVA);
+    }
     if (esSimetrica(R)) cumple.push_back(SIMETRICA);
-    if (esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
+    if (!es_reflexiva && esAsimetrica(R)) {
+        es_asimetrica = true;
+        cumple.push_back(ASIMETRICA);
+    }
+    if (!es_reflexiva && !es_asimetrica && esAntisimetrica(R)) {
+        cumple.push_back(ANTISIMETRICA);
+    }
     return cumple;
 }
 
@@ -148,7 +159,6 @@ bool Conjunto::include(elementoPair sub_conjunto) {
 }
 
 bool Conjunto::esReflexiva(Conjunto &R) {
-    std::cout<<R.getConjunto().at(0).size();
     for (auto elemento : conjunto) {
         if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
             return false;
@@ -182,12 +192,11 @@ std::ostream& operator<<(std::ostream& os, const Conjunto& conjunto) {
 }
 
 Conjunto::operator conjuntoType() const { return conjunto; }
-bool Conjunto::esAsimetrica(Conjunto &R) {
+bool Conjunto::esAntisimetrica(Conjunto &R) {// elemento
     for (auto elemento : R.conjunto) {
-        if (elemento[0] == elemento[1]) continue;
         for (auto elemento2 : R.conjunto) {
-            if (elemento == elemento2) continue;
-            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0]) return false;
+            //if (elemento == elemento2) continue;// (a, b) , (a, b)
+            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] != elemento[1]) return false;
         }
     }
     return true;
@@ -209,12 +218,10 @@ void Conjunto::push_back(std::string elemento) {
     }
     conjunto.push_back(elementos);
 }
-bool Conjunto::esAntisimetrica(Conjunto &R) {
+bool Conjunto::esAsimetrica(Conjunto &R) {
     for (auto elemento : R.conjunto) {
-        if (elemento[0] == elemento[1]) continue;
         for (auto elemento2 : R.conjunto) {
-            if (elemento == elemento2) continue;
-            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0]) return false;
+            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] == elemento[1]) return false;
         }
     }
     return true;

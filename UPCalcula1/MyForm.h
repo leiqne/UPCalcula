@@ -79,7 +79,8 @@ namespace UPCalcula {
 		/// <summary>
 		/// Variable del diseñador necesaria.
 		/// </summary>
-		Conjunto* relacion=new Conjunto();
+		Conjunto* relacion=new Conjunto(), *prodCartesiano;
+
 		Color SelectedColor = Color::FromArgb(45, 212, 191);
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
@@ -474,6 +475,7 @@ namespace UPCalcula {
 			no_repetido.insert(elemento);
 			elementos.push_back({ s });
 		}
+
 		//validar si hay valores repetidos
 		if (no_repetido.size() != convierteString.size())
 		{
@@ -490,6 +492,7 @@ namespace UPCalcula {
 		RandomA->Visible = false;
 
 		auto resultado = Funciones::calcularProdCartesiano(elementos);
+		prodCartesiano = new Conjunto((new Conjunto())->pairToConjunto(resultado));
 
 		int x = 260; int y = 50;  int i = 0; int dx = 60;
 		if (convierteString.size() <= 5){
@@ -537,7 +540,7 @@ namespace UPCalcula {
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
 	private: System::Void clasifica_Click(System::Object^ sender, System::EventArgs^ e) {
-		auto relaciones = relacion->clasificarR(*relacion);
+		auto relaciones = prodCartesiano->clasificarR(*relacion);
 		string relaciones_str = "Cumple con las relaciones:\n";
 		for (auto re : relaciones) relaciones_str += tipos[re] + '\n';
 		String^ mensaje = gcnew String(relaciones_str.c_str());
