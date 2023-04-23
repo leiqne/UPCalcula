@@ -14,10 +14,11 @@ using conjuntoType = std::vector<elementosType>;
 using elementoPair = std::pair<std::string, std::string>;
 using conjuntoPair = std::vector<elementoPair>;
 
-enum tiposRelacion { REFLEXIVA, SIMETRICA, ASIMETRICA, ANTISIMETRICA, TRANSITIVA, EQUIVALENCIA, ORDEN_PARCIAL };
+enum tiposRelacion { REFLEXIVA, IRREFLEXIVA, SIMETRICA, ASIMETRICA, ANTISIMETRICA, TRANSITIVA, EQUIVALENCIA, ORDEN_PARCIAL };
 
 std::map<tiposRelacion, std::string> tipos = {
     {tiposRelacion::REFLEXIVA, "Reflexiva"},
+    {tiposRelacion::IRREFLEXIVA, "Irreflexiva"},
     {tiposRelacion::SIMETRICA, "Simetrica"},
     {tiposRelacion::ASIMETRICA, "ASimetrica"},
     {tiposRelacion::ANTISIMETRICA, "Antisimetrica"},
@@ -59,6 +60,7 @@ private:
     bool esEquivalente(Conjunto&);
     bool esAntisimetrica(Conjunto&);
     bool esReflexiva(Conjunto&);
+    bool esIrreflexiva(Conjunto&);
 };
 
 Conjunto::Conjunto(std::string conjunto_raw_) : conjunto_raw(conjunto_raw_) {}
@@ -137,6 +139,9 @@ std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
         es_reflexiva = true;
         cumple.push_back(REFLEXIVA);
     }
+    if (esIrreflexiva(R)) {
+        cumple.push_back(IRREFLEXIVA);
+    }
     if (esSimetrica(R)) cumple.push_back(SIMETRICA);
     if (!es_reflexiva && esAsimetrica(R)) {
         es_asimetrica = true;
@@ -165,6 +170,14 @@ bool Conjunto::esReflexiva(Conjunto &R) {
         }
     }
     return true;
+}
+bool Conjunto::esIrreflexiva(Conjunto& R) {
+    for (auto elemento : conjunto) {
+        if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool Conjunto::esSimetrica(Conjunto &R) {

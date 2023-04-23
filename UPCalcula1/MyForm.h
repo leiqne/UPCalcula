@@ -356,7 +356,7 @@ namespace UPCalcula {
 		upch->Visible = true;
 		pictureBox1->Visible = false;
 		RandomA->Visible = true;
-
+		textBox1->Focus();
 	}
 	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
