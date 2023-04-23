@@ -491,13 +491,10 @@ namespace UPCalcula {
 		auto resultado = Funciones::calcularProdCartesiano(elementos);
 
 		int x = 260; int y = 50;  int i = 0; int dx = 60;
-		if (convierteString.size() <= 5)
-		{
+		if (convierteString.size() <= 5){
 			x = 280;
 			dx = 80;
-		}
-		else
-		{
+		} else {
 			x = 260;
 			dx = 60;
 		}
@@ -506,6 +503,7 @@ namespace UPCalcula {
 			Button^ nuevoBoton = gcnew Button();
 			String^ txtbtn = "(" + gcnew String(elemento->first.c_str()) + "," + gcnew String(elemento->second.c_str()) + ")";
 			nuevoBoton->Click += gcnew EventHandler(this, &MyForm::clickBoton);
+			nuevoBoton->FlatStyle = FlatStyle::Flat;
 			nuevoBoton->Text = txtbtn;
 			nuevoBoton->Name = txtbtn;
 			nuevoBoton->Location = Point(x + dx * i, y);//posicionando los botones
@@ -517,24 +515,22 @@ namespace UPCalcula {
 			}
 			panel1->Controls->Add(nuevoBoton);//poniendolos en el panel
 		}
-
-
 	}
 	private:
 		System::Void clickBoton(System::Object^ sender, System::EventArgs^ e) {
 			Button^ Boton = safe_cast<Button^>(sender);
 			clasifica->Visible = true;
-			if (Boton->BackColor == Color::Gray)
+			if (Boton->BackColor == Color::Green) {
 				Boton->BackColor = Color::Transparent;
-			else {
-				Boton->BackColor = Color::Blue;
+				Boton->ForeColor = Color::Black;
+			} else {
+				Boton->BackColor = Color::Green;
 				Boton->ForeColor = Color::White;
 				String^ c = Boton->Text->ToString();
 				string convierteString = msclr::interop::marshal_as<string>(c);
 				string ptmrConvierteString = string(convierteString);
 				relacion->push_back(ptmrConvierteString);
 			}
-			
 		}
 	private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
 
@@ -543,7 +539,10 @@ namespace UPCalcula {
 	}
 	private: System::Void clasifica_Click(System::Object^ sender, System::EventArgs^ e) {
 		auto relaciones = relacion->clasificarR(*relacion);
-		for (auto re : relaciones) cout << tipos[re] << endl;
+		string relaciones_str = "Cumple con las relaciones:\n";
+		for (auto re : relaciones) relaciones_str += tipos[re] + '\n';
+		String^ mensaje = gcnew String(relaciones_str.c_str());
+		MessageBox::Show(mensaje);
 	}
 };
 }

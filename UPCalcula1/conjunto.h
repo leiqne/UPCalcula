@@ -58,8 +58,6 @@ private:
     bool esEquivalente(Conjunto&);
     bool esAntisimetrica(Conjunto&);
     bool esReflexiva(Conjunto&);
-    
-
 };
 
 Conjunto::Conjunto(std::string conjunto_raw_) : conjunto_raw(conjunto_raw_) {}
