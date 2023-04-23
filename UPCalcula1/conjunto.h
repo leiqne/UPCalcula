@@ -39,7 +39,7 @@ public:
     conjuntoType getConjunto();
     std::vector<tiposRelacion> clasificarR(Conjunto&);
 
-    int size();
+    size_t size();
 
     bool include(std::pair<std::string, std::string>);
 
@@ -60,6 +60,7 @@ private:
     bool esEquivalente(Conjunto&);
     bool esAntisimetrica(Conjunto&);
     bool esReflexiva(Conjunto&);
+    bool esTransitiva(Conjunto&);
     bool esIrreflexiva(Conjunto&);
     bool esOrdenParcial(Conjunto&);
 };
@@ -147,10 +148,13 @@ std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
         cumple.push_back(ASIMETRICA);
     }
     if (!es_reflexiva && !es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
+    if (esTransitiva(R)) cumple.push_back(TRANSITIVA);
+    if (esEquivalente(R)) cumple.push_back(EQUIVALENCIA);
+    if (esOrdenParcial(R)) cumple.push_back(ORDEN_PARCIAL);
     return cumple;
 }
 
-int Conjunto::size() { return conjunto.size(); }
+size_t Conjunto::size() { return conjunto.size(); }
 
 bool Conjunto::include(elementoPair sub_conjunto) {
     for (auto elemento : conjunto) {
@@ -211,7 +215,7 @@ bool Conjunto::esAntisimetrica(Conjunto &R) {// elemento
     }
     return true;
 }
-bool Conjunto::esAsimetrica(Conjunto& R) {
+bool Conjunto::esAsimetrica(Conjunto &R) {
     for (auto elemento : R.conjunto) {
         for (auto elemento2 : R.conjunto) {
             if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] == elemento[1]) return false;
@@ -219,11 +223,27 @@ bool Conjunto::esAsimetrica(Conjunto& R) {
     }
     return true;
 }
+
+bool Conjunto::esTransitiva(Conjunto &R) {
+    for (int i = 0; i < R.size(); i++) {
+        for (int j = 0; j < R.size(); j++) {
+            if (R.getConjunto()[i][j] == "1") {
+                for (int k = 0; k < R.size(); k++) {
+                    if (R.getConjunto()[j][k] == "1" && R.getConjunto()[i][k] != "1") {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
 bool Conjunto::esEquivalente(Conjunto &R) {
-    return esReflexiva(R) && esSimetrica(R);
+    return esReflexiva(R) && esSimetrica(R) && esTransitiva(R);
 }
 bool Conjunto::esOrdenParcial(Conjunto& R) {
-    return esReflexiva(R) && esAntisimetrica(R);
+    return esReflexiva(R) && esAntisimetrica(R) && esTransitiva(R);
 }
 
 void Conjunto::push_back(std::string elemento) {
