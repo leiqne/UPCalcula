@@ -61,6 +61,7 @@ private:
     bool esAntisimetrica(Conjunto&);
     bool esReflexiva(Conjunto&);
     bool esIrreflexiva(Conjunto&);
+    bool esOrdenParcial(Conjunto&);
 };
 
 Conjunto::Conjunto(std::string conjunto_raw_) : conjunto_raw(conjunto_raw_) {}
@@ -139,17 +140,13 @@ std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
         es_reflexiva = true;
         cumple.push_back(REFLEXIVA);
     }
-    if (esIrreflexiva(R)) {
-        cumple.push_back(IRREFLEXIVA);
-    }
+    if (esIrreflexiva(R)) cumple.push_back(IRREFLEXIVA);
     if (esSimetrica(R)) cumple.push_back(SIMETRICA);
     if (!es_reflexiva && esAsimetrica(R)) {
         es_asimetrica = true;
         cumple.push_back(ASIMETRICA);
     }
-    if (!es_reflexiva && !es_asimetrica && esAntisimetrica(R)) {
-        cumple.push_back(ANTISIMETRICA);
-    }
+    if (!es_reflexiva && !es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
     return cumple;
 }
 
@@ -214,9 +211,21 @@ bool Conjunto::esAntisimetrica(Conjunto &R) {// elemento
     }
     return true;
 }
+bool Conjunto::esAsimetrica(Conjunto& R) {
+    for (auto elemento : R.conjunto) {
+        for (auto elemento2 : R.conjunto) {
+            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] == elemento[1]) return false;
+        }
+    }
+    return true;
+}
 bool Conjunto::esEquivalente(Conjunto &R) {
     return esReflexiva(R) && esSimetrica(R);
 }
+bool Conjunto::esOrdenParcial(Conjunto& R) {
+    return esReflexiva(R) && esAntisimetrica(R);
+}
+
 void Conjunto::push_back(std::string elemento) {
     elemento.erase(std::remove_if(elemento.begin(), elemento.end(), [](char c) {
         return c == '(' || c == ')';
@@ -230,14 +239,6 @@ void Conjunto::push_back(std::string elemento) {
         elementos.push_back(element);
     }
     conjunto.push_back(elementos);
-}
-bool Conjunto::esAsimetrica(Conjunto &R) {
-    for (auto elemento : R.conjunto) {
-        for (auto elemento2 : R.conjunto) {
-            if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] == elemento[1]) return false;
-        }
-    }
-    return true;
 }
 
 #endif // CONJUNTO_H
