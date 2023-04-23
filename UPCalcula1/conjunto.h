@@ -35,7 +35,7 @@ public:
     inline Conjunto pairToConjunto(conjuntoPair pair);
     conjuntoType parse();
     conjuntoType getConjunto();
-    std::vector<tiposRelacion> clasificarR(Conjunto& R);
+    std::vector<tiposRelacion> clasificarR(Conjunto&);
 
     int size();
 
@@ -51,13 +51,13 @@ public:
 
 private:
     std::string conjunto_raw;
-    conjuntoType conjunto = { {} };
+    conjuntoType conjunto;
 
-    bool esSimetrica(Conjunto R);
-    bool esAsimetrica(Conjunto R);
-    bool esEquivalente(Conjunto R);
-    bool esAntisimetrica(Conjunto R);
-    bool esReflexiva(Conjunto R);
+    bool esSimetrica(Conjunto&);
+    bool esAsimetrica(Conjunto&);
+    bool esEquivalente(Conjunto&);
+    bool esAntisimetrica(Conjunto&);
+    bool esReflexiva(Conjunto&);
     
 
 };
@@ -133,14 +133,9 @@ conjuntoType Conjunto::getConjunto() { return conjunto; }
 
 std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto &R) {
     std::vector<tiposRelacion> cumple;
-    if (esReflexiva(R)) {
-        std::cout << "hoia1" << std::endl; cumple.push_back(REFLEXIVA);
-    }
-    
+    if (esReflexiva(R))cumple.push_back(REFLEXIVA);
     if (esSimetrica(R)) cumple.push_back(SIMETRICA);
-    std::cout << "hoia2" << std::endl;
     if (esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
-    std::cout << "hoia3"<<std::endl;
     return cumple;
 }
 
@@ -154,7 +149,7 @@ bool Conjunto::include(elementoPair sub_conjunto) {
     return false;
 }
 
-bool Conjunto::esReflexiva(Conjunto R) {
+bool Conjunto::esReflexiva(Conjunto &R) {
     std::cout<<R.getConjunto().at(0).size();
     for (auto elemento : conjunto) {
         if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
@@ -164,7 +159,7 @@ bool Conjunto::esReflexiva(Conjunto R) {
     return true;
 }
 
-bool Conjunto::esSimetrica(Conjunto R) {
+bool Conjunto::esSimetrica(Conjunto &R) {
     for (auto sub_conjunto : R) {
         elementoPair grupo1 = std::make_pair(sub_conjunto[0], sub_conjunto[1]);
         elementoPair grupo2 = std::make_pair(sub_conjunto[1], sub_conjunto[0]);
@@ -189,7 +184,7 @@ std::ostream& operator<<(std::ostream& os, const Conjunto& conjunto) {
 }
 
 Conjunto::operator conjuntoType() const { return conjunto; }
-bool Conjunto::esAsimetrica(Conjunto R) {
+bool Conjunto::esAsimetrica(Conjunto &R) {
     for (auto elemento : R.conjunto) {
         if (elemento[0] == elemento[1]) continue;
         for (auto elemento2 : R.conjunto) {
@@ -199,7 +194,7 @@ bool Conjunto::esAsimetrica(Conjunto R) {
     }
     return true;
 }
-bool Conjunto::esEquivalente(Conjunto R) {
+bool Conjunto::esEquivalente(Conjunto &R) {
     return esReflexiva(R) && esSimetrica(R);
 }
 void Conjunto::push_back(std::string elemento) {
@@ -216,7 +211,7 @@ void Conjunto::push_back(std::string elemento) {
     }
     conjunto.push_back(elementos);
 }
-bool Conjunto::esAntisimetrica(Conjunto R) {
+bool Conjunto::esAntisimetrica(Conjunto &R) {
     for (auto elemento : R.conjunto) {
         if (elemento[0] == elemento[1]) continue;
         for (auto elemento2 : R.conjunto) {

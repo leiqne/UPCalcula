@@ -542,11 +542,8 @@ namespace UPCalcula {
 	private: System::Void panel1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 	}
 	private: System::Void clasifica_Click(System::Object^ sender, System::EventArgs^ e) {
-		Conjunto Bar = { {'1','1'}/*,{"2","2"},{"3","3"}*/ };
-		auto r=(*relacion).clasificarR(Bar);
-	
-	/*	cout << r.size();*/
-		/*for (auto re : r) cout << tipos[re] << endl;*/
+		auto relaciones = relacion->clasificarR(*relacion);
+		for (auto re : relaciones) cout << tipos[re] << endl;
 	}
 };
 }
