@@ -80,6 +80,7 @@ namespace UPCalcula {
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		Conjunto* relacion=new Conjunto();
+		Color SelectedColor = Color::FromArgb(45, 212, 191);
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
 	private: System::Windows::Forms::Timer^ timer2;
@@ -520,12 +521,10 @@ namespace UPCalcula {
 		System::Void clickBoton(System::Object^ sender, System::EventArgs^ e) {
 			Button^ Boton = safe_cast<Button^>(sender);
 			clasifica->Visible = true;
-			if (Boton->BackColor == Color::Green) {
+			if (Boton->BackColor == SelectedColor) 
 				Boton->BackColor = Color::Transparent;
-				Boton->ForeColor = Color::Black;
-			} else {
-				Boton->BackColor = Color::Green;
-				Boton->ForeColor = Color::White;
+			else {
+				Boton->BackColor = SelectedColor;
 				String^ c = Boton->Text->ToString();
 				string convierteString = msclr::interop::marshal_as<string>(c);
 				string ptmrConvierteString = string(convierteString);
