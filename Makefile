@@ -1,4 +1,13 @@
-all: ../cli.exe
+CC = cl
+CFLAGS = /EHsc
+LDFLAGS = /Fe
+SOURCES = ./UPCalcula1/cli.cpp
+EXECUTABLE = ./cli.exe
 
-../cli.exe: ./UPCalcula1/cli.cpp
-    cl /EHsc /Fe /cli.exe ./UPCalcula1/cli.cpp
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(SOURCES)
+	$(CC) $(CFLAGS) $(LDFLAGS)$(EXECUTABLE) $(SOURCES)
+
+clean:
+	del *.obj

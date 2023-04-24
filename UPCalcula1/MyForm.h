@@ -3,6 +3,7 @@
 #include <msclr/marshal_cppstd.h>
 #include <string>
 #include <set>
+#include <Windows.h>
 #using <System.dll>
 #include "funciones.h"
 #include "Controlador.h"
@@ -579,11 +580,10 @@ namespace UPCalcula {
 		MessageBox::Show(mensaje);
 	}
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-	string res = Run({
-			"C:/Users/aaron/OneDrive/Documentos/proyectos/P2Web/env/Scripts/activate.bat",
-			"&&",
-			"C:/Users/aaron/OneDrive/Documentos/proyectos/P2Web/index.py &"
-		});
+	string res = Run({ 
+		"start http://127.0.0.1:5000 &&",
+		"C:/Users/aaron/OneDrive/Documentos/proyectos/UPCalcula/index.exe &"
+	});
 	cout << res << endl;
 }
 };

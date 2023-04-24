@@ -33,18 +33,22 @@ int main(int argc, char* argv[]) {
 		}
 	}
 	else if (args.at(0) == "clasificar") {
-		if (args.size() != 5) {
-			cout << "Argumentos inválidos" << endl;
+		if (std::find(args.begin(), args.end(), "-r") == args.end() && find(args.begin(), args.end(), "-conjunto") == args.end()) {
+			cout << "Argumentos inválidos " << args.size() << endl;
 			return EXIT_FAILURE;
 		}
-		auto begin = args.begin();
+		elementosType::iterator begin = args.begin()++;
 		Conjunto conjunto, relacion;
-		for (auto arg = begin + 1; arg != args.end(); arg++) {
-			if (arg == "-c") conjunto = Funciones::parseConjunto(++arg);
-			else if (arg == '-r') relacion = Funciones::parseConjunto(++args);
+		for (auto arg = begin; arg != args.end(); arg++) {
+			if (*arg == "-conjunto") conjunto = Funciones::parseConjunto(*(++arg));
+			else if (*arg == "-r") relacion = Funciones::parseConjunto(*(++arg));
 		}
-
-		cout << conjunto << endl << relacion << endl;
+		auto clasificacion = conjunto.clasificarR(relacion);
+		// imprimir como array
+		cout << "[";
+		for (auto rel = clasificacion.begin(); rel != clasificacion.end(); rel++)
+			cout << tipos[*rel]  << (rel + 1 != clasificacion.end() ? "," : "");
+		cout << "]";
 	}
 	else if (args.at(0) == "test") {
 		string conjunto_raw = args.size() > 1 ? args.at(1) : "(3,9,0)";

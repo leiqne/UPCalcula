@@ -187,9 +187,9 @@ bool Conjunto::esIrreflexiva(Conjunto& R) {
 }
 
 bool Conjunto::esSimetrica(Conjunto &R) {
-    for (auto sub_conjunto : R) {
-        elementoPair grupo1 = std::make_pair(sub_conjunto[0], sub_conjunto[1]);
-        elementoPair grupo2 = std::make_pair(sub_conjunto[1], sub_conjunto[0]);
+    for (auto sub_conjunto : R) { // (1,2)
+        elementoPair grupo1 = std::make_pair(sub_conjunto[0], sub_conjunto[1]); // (1,2)
+        elementoPair grupo2 = std::make_pair(sub_conjunto[1], sub_conjunto[0]); //
         if (!R.include(grupo1) || !R.include(grupo2)) return false;
     }
     return true;
@@ -212,9 +212,8 @@ std::ostream& operator<<(std::ostream& os, const Conjunto& conjunto) {
 
 Conjunto::operator conjuntoType() const { return conjunto; }
 bool Conjunto::esAntisimetrica(Conjunto &R) {// elemento
-    for (auto elemento : R.conjunto) {
+    for (auto elemento : R.conjunto) { // {{"1", "1"}, {"1","2"}, {"1","3"}}
         for (auto elemento2 : R.conjunto) {
-            //if (elemento == elemento2) continue;// (a, b) , (a, b)
             if (elemento[0] == elemento2[1] && elemento[1] == elemento2[0] && elemento[0] != elemento[1]) return false;
         }
     }
@@ -234,13 +233,11 @@ bool Conjunto::esTransitiva(Conjunto& R) {
         for (auto j : R.conjunto) {
             if (i[1] == j[0]) {
                 elementoPair par(i[0], j[1]);
-                if (R.include(par)) {
-                    return true;
-                }
+                if (!R.include(par)) return false;
             }
         }
     }
-    return false;
+    return true;
 }
 
 bool Conjunto::esEquivalente(Conjunto &R) {
