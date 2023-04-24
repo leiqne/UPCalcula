@@ -20,7 +20,7 @@ std::map<tiposRelacion, std::string> tipos = {
     {tiposRelacion::REFLEXIVA, "Reflexiva"},
     {tiposRelacion::IRREFLEXIVA, "Irreflexiva"},
     {tiposRelacion::SIMETRICA, "Simetrica"},
-    {tiposRelacion::ASIMETRICA, "ASimetrica"},
+    {tiposRelacion::ASIMETRICA, "Asimetrica"},
     {tiposRelacion::ANTISIMETRICA, "Antisimetrica"},
     {tiposRelacion::TRANSITIVA, "Transitiva"},
     {tiposRelacion::EQUIVALENCIA, "Equivalencia"},
@@ -147,7 +147,7 @@ std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
         es_asimetrica = true;
         cumple.push_back(ASIMETRICA);
     }
-    if (!es_reflexiva && !es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
+    if (!es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
     if (esTransitiva(R)) cumple.push_back(TRANSITIVA);
     if (esEquivalente(R)) cumple.push_back(EQUIVALENCIA);
     if (esOrdenParcial(R)) cumple.push_back(ORDEN_PARCIAL);
@@ -174,11 +174,11 @@ bool Conjunto::esReflexiva(Conjunto &R) {
 }
 bool Conjunto::esIrreflexiva(Conjunto& R) {
     for (auto elemento : conjunto) {
-        if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
-            return true;
+        if (R.include(std::make_pair(elemento[0], elemento[0]))) {
+            return false;
         }
     }
-    return false;
+    return true;
 }
 
 bool Conjunto::esSimetrica(Conjunto &R) {
@@ -224,19 +224,18 @@ bool Conjunto::esAsimetrica(Conjunto &R) {
     return true;
 }
 
-bool Conjunto::esTransitiva(Conjunto &R) {
-    for (int i = 0; i < R.size(); i++) {
-        for (int j = 0; j < R.size(); j++) {
-            if (R.getConjunto()[i][j] == "1") {
-                for (int k = 0; k < R.size(); k++) {
-                    if (R.getConjunto()[j][k] == "1" && R.getConjunto()[i][k] != "1") {
-                        return false;
-                    }
+bool Conjunto::esTransitiva(Conjunto& R) {
+    for (auto i : R.conjunto) {
+        for (auto j : R.conjunto) {
+            if (i[1] == j[0]) {
+                elementoPair par(i[0], j[1]);
+                if (R.include(par)) {
+                    return true;
                 }
             }
         }
     }
-    return true;
+    return false;
 }
 
 bool Conjunto::esEquivalente(Conjunto &R) {

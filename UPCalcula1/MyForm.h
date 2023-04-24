@@ -579,7 +579,12 @@ namespace UPCalcula {
 		MessageBox::Show(mensaje);
 	}
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-	cout << ":D" << endl;
+	string res = Run({
+			"C:/Users/aaron/OneDrive/Documentos/proyectos/P2Web/env/Scripts/activate.bat",
+			"&&",
+			"C:/Users/aaron/OneDrive/Documentos/proyectos/P2Web/index.py &"
+		});
+	cout << res << endl;
 }
 };
 }
