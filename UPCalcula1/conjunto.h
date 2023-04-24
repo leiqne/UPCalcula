@@ -63,6 +63,8 @@ private:
     bool esTransitiva(Conjunto&);
     bool esIrreflexiva(Conjunto&);
     bool esOrdenParcial(Conjunto&);
+
+    bool es_asimetrica = false, es_reflexiva = false, es_simetrica = false;
 };
 
 Conjunto::Conjunto(std::string conjunto_raw_) : conjunto_raw(conjunto_raw_) {}
@@ -136,18 +138,21 @@ conjuntoType Conjunto::getConjunto() { return conjunto; }
 
 std::vector<tiposRelacion> Conjunto::clasificarR(Conjunto& R) {
     std::vector<tiposRelacion> cumple;
-    bool es_asimetrica = false, es_reflexiva = false;
+    
     if (esReflexiva(R)) {
         es_reflexiva = true;
         cumple.push_back(REFLEXIVA);
     }
     if (esIrreflexiva(R)) cumple.push_back(IRREFLEXIVA);
-    if (esSimetrica(R)) cumple.push_back(SIMETRICA);
-    if (!es_reflexiva && esAsimetrica(R)) {
+    if (esSimetrica(R)) {
+        es_simetrica = true;
+        cumple.push_back(SIMETRICA);
+    }
+    if (es_simetrica && !es_reflexiva && esAsimetrica(R)) {
         es_asimetrica = true;
         cumple.push_back(ASIMETRICA);
     }
-    if (!es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
+    if (!es_simetrica && !es_asimetrica && esAntisimetrica(R)) cumple.push_back(ANTISIMETRICA);
     if (esTransitiva(R)) cumple.push_back(TRANSITIVA);
     if (esEquivalente(R)) cumple.push_back(EQUIVALENCIA);
     if (esOrdenParcial(R)) cumple.push_back(ORDEN_PARCIAL);
@@ -242,7 +247,7 @@ bool Conjunto::esEquivalente(Conjunto &R) {
     return esReflexiva(R) && esSimetrica(R) && esTransitiva(R);
 }
 bool Conjunto::esOrdenParcial(Conjunto& R) {
-    return esReflexiva(R) && esAntisimetrica(R) && esTransitiva(R);
+    return esReflexiva(R) && (!es_simetrica && !es_asimetrica && esAntisimetrica(R)) && esTransitiva(R);
 }
 
 void Conjunto::push_back(std::string elemento) {
