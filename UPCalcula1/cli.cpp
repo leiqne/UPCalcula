@@ -43,7 +43,8 @@ int main(int argc, char* argv[]) {
 			if (*arg == "-conjunto") conjunto = Funciones::parseConjunto(*(++arg));
 			else if (*arg == "-r") relacion = Funciones::parseConjunto(*(++arg));
 		}
-		auto clasificacion = conjunto.clasificarR(relacion);
+		Conjunto prodCartesiano = Conjunto().pairToConjunto(Funciones::calcularProdCartesiano(conjunto));
+		auto clasificacion = prodCartesiano.clasificarR(relacion);
 		// imprimir como array
 		cout << "[";
 		for (auto rel = clasificacion.begin(); rel != clasificacion.end(); rel++)
