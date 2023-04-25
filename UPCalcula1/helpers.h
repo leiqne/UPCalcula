@@ -3,6 +3,7 @@
 #define HELPERS_H
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <numeric>
@@ -36,6 +37,20 @@ std::string join(std::vector<std::string> vec, std::string separator) {
 			return a.empty() ? b : a + separator + b;
 		}
 	);
+}
+
+bool checkFile(const std::string& filePath) {
+    // Intenta abrir el archivo en modo de lectura
+    std::ifstream fileStream(filePath);
+
+    // Verifica si el archivo se abrió correctamente y si existe
+    if (fileStream.good()) { // El archivo existe en la ruta especificada
+        fileStream.close();
+        return true;
+    } else { // El archivo no existe en la ruta especificada
+        fileStream.close();
+        return false;
+    }
 }
 
 std::string Run(std::vector<std::string> args_) {

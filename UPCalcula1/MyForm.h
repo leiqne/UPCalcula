@@ -3,16 +3,17 @@
 #include <msclr/marshal_cppstd.h>
 #include <string>
 #include <set>
-#include <Windows.h>
-#using <System.dll>
+#include <filesystem>
 #include "funciones.h"
 #include "Controlador.h"
 #include "helpers.h"
+#using <System.dll>
 
 using namespace System::Runtime::InteropServices;
 using namespace System;
 using namespace std;
 using namespace Funciones;
+
 namespace UPCalcula {
 
 	using namespace System;
@@ -564,10 +565,18 @@ namespace UPCalcula {
 		MessageBox::Show(mensaje);
 	}
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
-	string res = Run({ 
-		"start http://127.0.0.1:5000 &&",
-		"C:/Users/aaron/OneDrive/Documentos/proyectos/UPCalcula/index.exe &"
-	});
+	filesystem::path pathExe = filesystem::current_path();
+	cout << "PATH: " << pathExe.string() << endl;
+
+	if (!checkFile((pathExe / "index.exe").string())) {
+		pathExe = pathExe.parent_path() / "index.exe";
+		if (!checkFile(pathExe.string())) {
+			MessageBox::Show("No se ha encontrado el archivo para abrir la web");
+			return;
+		}
+	}
+	
+	string res = Run({ "start http://127.0.0.1:5000 &&", pathExe.string(), "&"});
 	cout << res << endl;
 }
 };
