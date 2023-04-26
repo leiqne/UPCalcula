@@ -42,7 +42,7 @@ public:
     size_t size();
 
     bool include(std::pair<std::string, std::string>);
-
+    Conjunto conjuntoCociente(Conjunto&);
     conjuntoType::iterator begin();
     conjuntoType::iterator end();
 
@@ -178,19 +178,16 @@ bool Conjunto::esReflexiva(Conjunto &R) {
     return true;
 }
 bool Conjunto::esIrreflexiva(Conjunto& R) {
-    for (auto elemento : conjunto) {
-        if (R.include(std::make_pair(elemento[0], elemento[0]))) {
-            return false;
-        }
+    for (auto elemento : R) {
+        if (elemento[0] == elemento[0]) return false;
     }
     return true;
 }
 
 bool Conjunto::esSimetrica(Conjunto &R) {
-    for (auto sub_conjunto : R) { // (1,2)
-        elementoPair grupo1 = std::make_pair(sub_conjunto[0], sub_conjunto[1]); // (1,2)
-        elementoPair grupo2 = std::make_pair(sub_conjunto[1], sub_conjunto[0]); //
-        if (!R.include(grupo1) || !R.include(grupo2)) return false;
+    for (auto sub_conjunto : R) {
+        elementoPair inverso= std::make_pair(sub_conjunto[1], sub_conjunto[0]); //
+        if (!R.include(inverso)) return false;
     }
     return true;
 }
@@ -229,15 +226,20 @@ bool Conjunto::esAsimetrica(Conjunto &R) {
 }
 
 bool Conjunto::esTransitiva(Conjunto& R) {
-    for (auto i : R.conjunto) {
-        for (auto j : R.conjunto) {
-            if (i[1] == j[0]) {
-                elementoPair par(i[0], j[1]);
-                if (!R.include(par)) return false;
+    for (auto it1 = R.begin(); it1 != R.end(); ++it1) {
+        for (auto it2 = R.begin(); it2 != R.end(); ++it2) {
+            // Si existe una relación entre it1 y it2
+            if (it1->at(1) == it2->at(0)) {
+                // Buscamos una relación entre it1 y cualquier otro elemento relacionado indirectamente con it2
+                for (auto it3 = R.begin(); it3 != R.end(); ++it3) {
+                    if (it2->at(1) == it3->at(0) && !R.include({ it1->at(0), it3->at(1) })) {
+                        return false; // La relación no es transitiva
+                    }
+                }
             }
         }
     }
-    return true;
+    return true; // La relación es transitiva
 }
 
 bool Conjunto::esEquivalente(Conjunto &R) {
@@ -245,6 +247,31 @@ bool Conjunto::esEquivalente(Conjunto &R) {
 }
 bool Conjunto::esOrdenParcial(Conjunto& R) {
     return esReflexiva(R) && (!es_simetrica && !es_asimetrica && esAntisimetrica(R)) && esTransitiva(R);
+}
+
+Conjunto Conjunto::conjuntoCociente(Conjunto& relacionEquivalencia) {
+    // Crear un vector de subconjuntos (particiones)
+    std::vector<elementosType> particiones;
+
+    // Iterar sobre el conjunto original y agrupar los elementos
+    for (const auto& elemento : conjunto) {
+        // Buscar el subconjunto al que pertenece el elemento
+        bool encontrado = false;
+        for (auto& particion : particiones) {
+            // Verificar si el elemento pertenece a esta partición
+            if (relacionEquivalencia.include({ particion.front(), elemento.front() })) {
+                particion.push_back(elemento.front());
+                encontrado = true;
+                break;
+            }
+        }
+        // Si el elemento no pertenece a ninguna partición existente, crear una nueva partición
+        if (!encontrado) {
+            particiones.push_back({ elemento.front() });
+        }
+    }
+    for(auto a: particiones) cout << a[0] << " " << a[1] << endl;
+    return Conjunto();
 }
 
 void Conjunto::push_back(std::string elemento) {
