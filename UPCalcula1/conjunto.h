@@ -270,7 +270,7 @@ Conjunto Conjunto::conjuntoCociente(Conjunto& relacionEquivalencia) {
             particiones.push_back({ elemento.front() });
         }
     }
-    for(auto a: particiones) cout << a[0] << " " << a[1] << endl;
+    for(auto a: particiones) std::cout << a[0] << " " << a[1] << std::endl;
     return Conjunto();
 }
 
