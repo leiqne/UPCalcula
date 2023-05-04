@@ -144,6 +144,11 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\cli.exe" />
+    <None Include="..\hasse.exe" />
+    <None Include="..\index.exe" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

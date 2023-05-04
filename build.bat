@@ -22,7 +22,7 @@ if exist "%carpeta%" (
     call :colorEcho 02 "Se ha creado la carpeta %carpeta% satisfactoriamente"
 )
 
-set listaArchivos=cli.exe index.exe
+set listaArchivos=cli.exe index.exe hasse.exe graphviz-install-8.0.3-win64.exe .\x64\Release\UPCalcula1.exe
 
 set totalArchivos=0
 for %%a in (%listaArchivos%) do (

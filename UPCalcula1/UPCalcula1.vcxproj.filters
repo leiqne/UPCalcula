@@ -44,4 +44,15 @@
       <Filter>Archivos de recursos</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\cli.exe">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\hasse.exe">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="..\index.exe">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+  </ItemGroup>
 </Project>

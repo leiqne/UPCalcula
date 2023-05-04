@@ -82,10 +82,12 @@ namespace UPCalcula {
 		/// Variable del diseñador necesaria.
 		/// </summary>
 		Conjunto* relacion=new Conjunto(), *prodCartesiano;
-
+		bool esOrdenParcial = false;
 		Color SelectedColor = Color::FromArgb(45, 212, 191);
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
+		string *conjuntoInicial = new string(), * relacionStr = new string();
+	private: System::Windows::Forms::Button^ btnDiagramar;
 	private: System::Windows::Forms::Timer^ timer2;
 	private: System::Windows::Forms::Button^ clasifica;
 	private: System::Windows::Forms::Button^ button1;
@@ -116,6 +118,7 @@ namespace UPCalcula {
 			   this->button1 = (gcnew System::Windows::Forms::Button());
 			   this->clasifica = (gcnew System::Windows::Forms::Button());
 			   this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
+			   this->btnDiagramar = (gcnew System::Windows::Forms::Button());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			   this->panel1->SuspendLayout();
 			   this->SuspendLayout();
@@ -126,9 +129,10 @@ namespace UPCalcula {
 			   this->inicio->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->inicio->ForeColor = System::Drawing::Color::White;
-			   this->inicio->Location = System::Drawing::Point(370, 347);
+			   this->inicio->Location = System::Drawing::Point(493, 427);
+			   this->inicio->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->inicio->Name = L"inicio";
-			   this->inicio->Size = System::Drawing::Size(173, 59);
+			   this->inicio->Size = System::Drawing::Size(231, 73);
 			   this->inicio->TabIndex = 1;
 			   this->inicio->Text = L"Inicio";
 			   this->inicio->UseVisualStyleBackColor = false;
@@ -138,10 +142,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox1->Location = System::Drawing::Point(193, 183);
+			   this->textBox1->Location = System::Drawing::Point(257, 225);
+			   this->textBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox1->Multiline = true;
 			   this->textBox1->Name = L"textBox1";
-			   this->textBox1->Size = System::Drawing::Size(45, 45);
+			   this->textBox1->Size = System::Drawing::Size(59, 54);
 			   this->textBox1->TabIndex = 2;
 			   this->textBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox1_TextChanged);
 			   this->textBox1->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox1_KeyPress);
@@ -151,10 +156,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox2->Location = System::Drawing::Point(281, 183);
+			   this->textBox2->Location = System::Drawing::Point(375, 225);
+			   this->textBox2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox2->Multiline = true;
 			   this->textBox2->Name = L"textBox2";
-			   this->textBox2->Size = System::Drawing::Size(45, 45);
+			   this->textBox2->Size = System::Drawing::Size(59, 54);
 			   this->textBox2->TabIndex = 3;
 			   this->textBox2->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox2_KeyPress);
 			   this->textBox2->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox2_KeyUp);
@@ -163,10 +169,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox3->Location = System::Drawing::Point(370, 183);
+			   this->textBox3->Location = System::Drawing::Point(493, 225);
+			   this->textBox3->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox3->Multiline = true;
 			   this->textBox3->Name = L"textBox3";
-			   this->textBox3->Size = System::Drawing::Size(45, 45);
+			   this->textBox3->Size = System::Drawing::Size(59, 54);
 			   this->textBox3->TabIndex = 4;
 			   this->textBox3->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox3_KeyPress);
 			   this->textBox3->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox3_KeyUp);
@@ -175,10 +182,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox4->Location = System::Drawing::Point(631, 183);
+			   this->textBox4->Location = System::Drawing::Point(841, 225);
+			   this->textBox4->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox4->Multiline = true;
 			   this->textBox4->Name = L"textBox4";
-			   this->textBox4->Size = System::Drawing::Size(45, 45);
+			   this->textBox4->Size = System::Drawing::Size(59, 54);
 			   this->textBox4->TabIndex = 7;
 			   this->textBox4->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox4_TextChanged);
 			   this->textBox4->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox4_KeyPress);
@@ -187,10 +195,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox5->Location = System::Drawing::Point(542, 183);
+			   this->textBox5->Location = System::Drawing::Point(723, 225);
+			   this->textBox5->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox5->Multiline = true;
 			   this->textBox5->Name = L"textBox5";
-			   this->textBox5->Size = System::Drawing::Size(45, 45);
+			   this->textBox5->Size = System::Drawing::Size(59, 54);
 			   this->textBox5->TabIndex = 6;
 			   this->textBox5->TextChanged += gcnew System::EventHandler(this, &MyForm::textBox5_TextChanged);
 			   this->textBox5->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox5_KeyPress);
@@ -199,10 +208,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox6->Location = System::Drawing::Point(454, 183);
+			   this->textBox6->Location = System::Drawing::Point(605, 225);
+			   this->textBox6->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox6->Multiline = true;
 			   this->textBox6->Name = L"textBox6";
-			   this->textBox6->Size = System::Drawing::Size(45, 45);
+			   this->textBox6->Size = System::Drawing::Size(59, 54);
 			   this->textBox6->TabIndex = 5;
 			   this->textBox6->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox6_KeyPress);
 			   this->textBox6->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox6_KeyUp);
@@ -211,10 +221,11 @@ namespace UPCalcula {
 			   // 
 			   this->textBox7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
-			   this->textBox7->Location = System::Drawing::Point(721, 183);
+			   this->textBox7->Location = System::Drawing::Point(961, 225);
+			   this->textBox7->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->textBox7->Multiline = true;
 			   this->textBox7->Name = L"textBox7";
-			   this->textBox7->Size = System::Drawing::Size(45, 45);
+			   this->textBox7->Size = System::Drawing::Size(59, 54);
 			   this->textBox7->TabIndex = 8;
 			   this->textBox7->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &MyForm::textBox7_KeyPress);
 			   this->textBox7->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::textBox7_KeyUp);
@@ -231,18 +242,20 @@ namespace UPCalcula {
 				   static_cast<System::Byte>(0)));
 			   this->upch->ForeColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(192)), static_cast<System::Int32>(static_cast<System::Byte>(0)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(0)));
-			   this->upch->Location = System::Drawing::Point(-4, 0);
+			   this->upch->Location = System::Drawing::Point(-5, 0);
+			   this->upch->Margin = System::Windows::Forms::Padding(4, 0, 4, 0);
 			   this->upch->Name = L"upch";
-			   this->upch->Size = System::Drawing::Size(105, 20);
+			   this->upch->Size = System::Drawing::Size(133, 25);
 			   this->upch->TabIndex = 9;
 			   this->upch->Text = L"UPCALCULA";
 			   // 
 			   // pictureBox1
 			   // 
 			   this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
-			   this->pictureBox1->Location = System::Drawing::Point(134, 124);
+			   this->pictureBox1->Location = System::Drawing::Point(179, 153);
+			   this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->pictureBox1->Name = L"pictureBox1";
-			   this->pictureBox1->Size = System::Drawing::Size(667, 203);
+			   this->pictureBox1->Size = System::Drawing::Size(889, 250);
 			   this->pictureBox1->TabIndex = 10;
 			   this->pictureBox1->TabStop = false;
 			   // 
@@ -252,9 +265,10 @@ namespace UPCalcula {
 			   this->RandomA->Font = (gcnew System::Drawing::Font(L"Impact", 21.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->RandomA->ForeColor = System::Drawing::Color::White;
-			   this->RandomA->Location = System::Drawing::Point(526, 347);
+			   this->RandomA->Location = System::Drawing::Point(701, 427);
+			   this->RandomA->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->RandomA->Name = L"RandomA";
-			   this->RandomA->Size = System::Drawing::Size(150, 59);
+			   this->RandomA->Size = System::Drawing::Size(200, 73);
 			   this->RandomA->TabIndex = 11;
 			   this->RandomA->Text = L"Random";
 			   this->RandomA->UseVisualStyleBackColor = false;
@@ -266,9 +280,10 @@ namespace UPCalcula {
 			   this->UPCalcular->Font = (gcnew System::Drawing::Font(L"Impact", 21.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->UPCalcular->ForeColor = System::Drawing::Color::White;
-			   this->UPCalcular->Location = System::Drawing::Point(198, 347);
+			   this->UPCalcular->Location = System::Drawing::Point(264, 427);
+			   this->UPCalcular->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->UPCalcular->Name = L"UPCalcular";
-			   this->UPCalcular->Size = System::Drawing::Size(166, 59);
+			   this->UPCalcular->Size = System::Drawing::Size(221, 73);
 			   this->UPCalcular->TabIndex = 12;
 			   this->UPCalcular->Text = L"UPCalcular";
 			   this->UPCalcular->UseVisualStyleBackColor = false;
@@ -277,6 +292,7 @@ namespace UPCalcula {
 			   // panel1
 			   // 
 			   this->panel1->BackColor = System::Drawing::Color::LightGray;
+			   this->panel1->Controls->Add(this->btnDiagramar);
 			   this->panel1->Controls->Add(this->button1);
 			   this->panel1->Controls->Add(this->clasifica);
 			   this->panel1->Controls->Add(this->UPCalcular);
@@ -291,9 +307,10 @@ namespace UPCalcula {
 			   this->panel1->Controls->Add(this->textBox2);
 			   this->panel1->Controls->Add(this->textBox1);
 			   this->panel1->Controls->Add(this->inicio);
-			   this->panel1->Location = System::Drawing::Point(3, 5);
+			   this->panel1->Location = System::Drawing::Point(4, 6);
+			   this->panel1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->panel1->Name = L"panel1";
-			   this->panel1->Size = System::Drawing::Size(970, 542);
+			   this->panel1->Size = System::Drawing::Size(1293, 667);
 			   this->panel1->TabIndex = 13;
 			   this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel1_Paint);
 			   // 
@@ -302,9 +319,10 @@ namespace UPCalcula {
 			   this->button1->BackColor = System::Drawing::Color::Red;
 			   this->button1->Font = (gcnew System::Drawing::Font(L"Impact", 20));
 			   this->button1->ForeColor = System::Drawing::Color::White;
-			   this->button1->Location = System::Drawing::Point(800, 480);
+			   this->button1->Location = System::Drawing::Point(1067, 591);
+			   this->button1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->button1->Name = L"button1";
-			   this->button1->Size = System::Drawing::Size(160, 43);
+			   this->button1->Size = System::Drawing::Size(213, 53);
 			   this->button1->TabIndex = 14;
 			   this->button1->Text = L"Abrir Web";
 			   this->button1->UseVisualStyleBackColor = false;
@@ -316,9 +334,10 @@ namespace UPCalcula {
 			   this->clasifica->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->clasifica->ForeColor = System::Drawing::Color::White;
-			   this->clasifica->Location = System::Drawing::Point(350, 460);
+			   this->clasifica->Location = System::Drawing::Point(467, 566);
+			   this->clasifica->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->clasifica->Name = L"clasifica";
-			   this->clasifica->Size = System::Drawing::Size(205, 59);
+			   this->clasifica->Size = System::Drawing::Size(273, 73);
 			   this->clasifica->TabIndex = 13;
 			   this->clasifica->Text = L"CLASIFICAR";
 			   this->clasifica->UseVisualStyleBackColor = false;
@@ -330,12 +349,29 @@ namespace UPCalcula {
 			   this->timer2->Enabled = true;
 			   this->timer2->Tick += gcnew System::EventHandler(this, &MyForm::timer2_Tick);
 			   // 
+			   // btnDiagramar
+			   // 
+			   this->btnDiagramar->BackColor = System::Drawing::Color::Red;
+			   this->btnDiagramar->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->btnDiagramar->ForeColor = System::Drawing::Color::White;
+			   this->btnDiagramar->Location = System::Drawing::Point(777, 566);
+			   this->btnDiagramar->Margin = System::Windows::Forms::Padding(4);
+			   this->btnDiagramar->Name = L"btnDiagramar";
+			   this->btnDiagramar->Size = System::Drawing::Size(273, 73);
+			   this->btnDiagramar->TabIndex = 15;
+			   this->btnDiagramar->Text = L"Diagramar";
+			   this->btnDiagramar->UseVisualStyleBackColor = false;
+			   this->btnDiagramar->Visible = false;
+			   this->btnDiagramar->Click += gcnew System::EventHandler(this, &MyForm::btnDiagramar_Click);
+			   // 
 			   // MyForm
 			   // 
-			   this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			   this->ClientSize = System::Drawing::Size(973, 549);
+			   this->ClientSize = System::Drawing::Size(1297, 676);
 			   this->Controls->Add(this->panel1);
+			   this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->Name = L"MyForm";
 			   this->Text = L"MyForm";
 			   this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -482,9 +518,26 @@ namespace UPCalcula {
 	}
 
 	private: System::Void UPCalcular_Click(System::Object^ sender, System::EventArgs^ e) {
+		String^ text1 = textBox1->Text->ToString();
+		String^ text2 = textBox2->Text->ToString();
+		String^ text3 = textBox3->Text->ToString();
+		String^ text4 = textBox6->Text->ToString();
+		String^ text5 = textBox5->Text->ToString();
+		String^ text6 = textBox4->Text->ToString();
+		String^ text7 = textBox7->Text->ToString();
 
-		String^ a = textBox1->Text->ToString() + textBox2->Text->ToString() + textBox3->Text->ToString() + textBox6->Text->ToString()
-			+ textBox5->Text->ToString() + textBox4->Text->ToString() + textBox7->Text->ToString();
+		String^ a = text1 + text2 + text3 + text4 + text5 + text6 + text7;
+
+		vector<string> conjuntoElementos = {
+			msclr::interop::marshal_as<string>(text1),
+			msclr::interop::marshal_as<string>(text2),
+			msclr::interop::marshal_as<string>(text3),
+			msclr::interop::marshal_as<string>(text4),
+			msclr::interop::marshal_as<string>(text5),
+			msclr::interop::marshal_as<string>(text6),
+			msclr::interop::marshal_as<string>(text7)
+		};
+
 		string convierteString = msclr::interop::marshal_as<string>(a);
 		set<char> no_repetido;
 		vector<vector<string>> elementos;
@@ -495,14 +548,18 @@ namespace UPCalcula {
 		}
 
 		//validar si hay valores repetidos
-		if (no_repetido.size() != convierteString.size())
-		{
+		if (no_repetido.size() != convierteString.size()) {
 			Beep(440, 200);
 			MessageBox::Show("Haz ingresado elementos repetidos!, por favor revise el conjunto");
 			return;
 		}
+
+		string conjuntoStr = join(conjuntoElementos, ",");
+		conjuntoInicial = new string(conjuntoStr);
+		
 		UPCalcular->Visible = false;
 		inicio->Visible = false;
+		
 		for each (auto txt in controlList)//recorre cada elemento
 		{
 			txt->Visible = false;
@@ -550,6 +607,7 @@ namespace UPCalcula {
 				string convierteString = msclr::interop::marshal_as<string>(c);
 				string ptmrConvierteString = string(convierteString);
 				relacion->push_back(ptmrConvierteString);
+				*relacionStr += ',' + ptmrConvierteString;
 			}
 		}
 	private: System::Void timer2_Tick(System::Object^ sender, System::EventArgs^ e) {
@@ -560,13 +618,25 @@ namespace UPCalcula {
 	private: System::Void clasifica_Click(System::Object^ sender, System::EventArgs^ e) {
 		auto relaciones = prodCartesiano->clasificarR(*relacion);
 		string relaciones_str = "Cumple con las relaciones:\n";
-		for (auto re : relaciones) relaciones_str += tipos[re] + '\n';
+		for (auto re : relaciones) {
+			if (re == ORDEN_PARCIAL) {
+				esOrdenParcial = true;
+				
+				conjuntoInicial->replace(conjuntoInicial->length() - 2, 2, ")");
+				conjuntoInicial->insert(0, "(");
+				
+				relacionStr->replace(0, 1, "(");
+				relacionStr->push_back(')');
+
+				btnDiagramar->Visible = true;
+			}
+			relaciones_str += tipos[re] + '\n';
+		}
 		String^ mensaje = gcnew String(relaciones_str.c_str());
 		MessageBox::Show(mensaje);
 	}
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	filesystem::path pathExe = filesystem::current_path();
-	cout << "PATH: " << pathExe.string() << endl;
 
 	if (!checkFile((pathExe / "index.exe").string())) {
 		pathExe = pathExe.parent_path() / "index.exe";
@@ -575,9 +645,32 @@ private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^
 			return;
 		}
 	}
+	else pathExe /= "index.exe";
 	
 	string res = Run({ "start http://127.0.0.1:5000 &&", pathExe.string(), "&"});
 	cout << res << endl;
+}
+
+private: System::Void btnDiagramar_Click(System::Object^ sender, System::EventArgs^ e) {
+	filesystem::path pathExe = filesystem::current_path();
+
+	if (!checkFile((pathExe / "hasse.exe").string())) {
+		pathExe = pathExe.parent_path() / "hasse.exe";
+		if (!checkFile(pathExe.string())) {
+			MessageBox::Show("No se ha encontrado el archivo para graficar el diagrama");
+			return;
+		}
+	} pathExe /= "hasse.exe";
+	try	{
+		Run({
+			pathExe.string(),
+			"-conjunto",
+			*conjuntoInicial,
+			"-relacion",
+			*relacionStr,
+			"--preview=1"
+		});
+	} catch (const std::exception&) {}
 }
 };
 }
