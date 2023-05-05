@@ -2,6 +2,7 @@
 
 #ifndef CONJUNTO_H
 #define CONJUNTO_H
+#include <set>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -249,10 +250,10 @@ bool Conjunto::esOrdenParcial(Conjunto& R) {
 }
 
 Conjunto Conjunto::conjuntoCociente(Conjunto& R) {
-    std::set<std::set<string>> conjunto_cociente;
+    std::set<std::set<std::string>> conjunto_cociente;
     for (auto inicio : conjunto)
     {
-        std::set<string> clase_equivalencia;
+        std::set<std::string> clase_equivalencia;
         for (auto relacion: R)
         {
             if (relacion[0]==inicio[1])//quiero el a == conjunto en i
@@ -266,24 +267,25 @@ Conjunto Conjunto::conjuntoCociente(Conjunto& R) {
         }
         conjunto_cociente.insert(clase_equivalencia);//la clase equivalencia se agrega al conjunto cociente
     }
-    cout << "conjunto cociente: { ";
+    std::cout << "conjunto cociente: { ";
     for (auto it=conjunto_cociente.begin();it!=conjunto_cociente.end();it++)
     {
-        cout << "{ ";
-        for (auto t2=it->begin();t2 !=it->end();t2++)
+        std::cout << "{ ";
+        for (auto t2 = it->begin(); t2 != it->end(); t2++)
         {
-            cout << *t2;//imprime el elemento apuntado por t2
-            if (next(t2)!=it->end())
+            std::cout << *t2;//imprime el elemento apuntado por t2
+            if (next(t2) != it->end())
             {
-                cout << ",";
+                std::cout << ",";
             }
-        }cout << " }";
+        }std::cout << " }";
         if (next(it)!=conjunto_cociente.end())
         {
-            cout << ", ";
+            std::cout << ", ";
         }
     }
-    cout << "} ";
+    std::cout << "} ";
+    return Conjunto();
 }
 
 void Conjunto::push_back(std::string elemento) {

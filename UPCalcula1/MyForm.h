@@ -683,7 +683,8 @@ private: System::Void btnDiagramar_Click(System::Object^ sender, System::EventAr
 			MessageBox::Show("No se ha encontrado el archivo para graficar el diagrama");
 			return;
 		}
-	} pathExe /= "hasse.exe";
+	} else pathExe /= "hasse.exe";
+	cout << pathExe << endl;
 	try	{
 		Run({
 			pathExe.string(),
