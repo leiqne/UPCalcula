@@ -53,8 +53,7 @@ public:
 
 private:
     std::string conjunto_raw;
-    conjuntoType conjunto;
-
+    conjuntoType conjunto;// 1 , 2 , 3 , 4 , 5
     bool esSimetrica(Conjunto&);
     bool esAsimetrica(Conjunto&);
     bool esEquivalente(Conjunto&);
@@ -249,29 +248,42 @@ bool Conjunto::esOrdenParcial(Conjunto& R) {
     return esReflexiva(R) && (!es_simetrica && !es_asimetrica && esAntisimetrica(R)) && esTransitiva(R);
 }
 
-Conjunto Conjunto::conjuntoCociente(Conjunto& relacionEquivalencia) {
-    // Crear un vector de subconjuntos (particiones)
-    std::vector<elementosType> particiones;
-
-    // Iterar sobre el conjunto original y agrupar los elementos
-    for (const auto& elemento : conjunto) {
-        // Buscar el subconjunto al que pertenece el elemento
-        bool encontrado = false;
-        for (auto& particion : particiones) {
-            // Verificar si el elemento pertenece a esta partición
-            if (relacionEquivalencia.include({ particion.front(), elemento.front() })) {
-                particion.push_back(elemento.front());
-                encontrado = true;
-                break;
+Conjunto Conjunto::conjuntoCociente(Conjunto& R) {
+    std::set<std::set<string>> conjunto_cociente;
+    for (auto inicio : conjunto)
+    {
+        std::set<string> clase_equivalencia;
+        for (auto relacion: R)
+        {
+            if (relacion[0]==inicio[1])//quiero el a == conjunto en i
+            {
+                clase_equivalencia.insert(relacion[1]);//para el segundo
+            }
+            if (relacion[1]==inicio[1])//quiero el b ==conjunto en i
+            {
+                clase_equivalencia.insert(relacion[0]);//para el primero
             }
         }
-        // Si el elemento no pertenece a ninguna partición existente, crear una nueva partición
-        if (!encontrado) {
-            particiones.push_back({ elemento.front() });
+        conjunto_cociente.insert(clase_equivalencia);//la clase equivalencia se agrega al conjunto cociente
+    }
+    cout << "conjunto cociente: { ";
+    for (auto it=conjunto_cociente.begin();it!=conjunto_cociente.end();it++)
+    {
+        cout << "{ ";
+        for (auto t2=it->begin();t2 !=it->end();t2++)
+        {
+            cout << *t2;//imprime el elemento apuntado por t2
+            if (next(t2)!=it->end())
+            {
+                cout << ",";
+            }
+        }cout << " }";
+        if (next(it)!=conjunto_cociente.end())
+        {
+            cout << ", ";
         }
     }
-    for(auto a: particiones) std::cout << a[0] << " " << a[1] << std::endl;
-    return Conjunto();
+    cout << "} ";
 }
 
 void Conjunto::push_back(std::string elemento) {

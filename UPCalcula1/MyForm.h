@@ -84,6 +84,7 @@ namespace UPCalcula {
 		Conjunto* relacion=new Conjunto(), *prodCartesiano;
 		bool esOrdenParcial = false;
 		Color SelectedColor = Color::FromArgb(45, 212, 191);
+		Conjunto* conjunto=new Conjunto();
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
 		string *conjuntoInicial = new string(), * relacionStr = new string();
@@ -572,7 +573,7 @@ namespace UPCalcula {
 			MessageBox::Show("Haz ingresado elementos repetidos!, por favor revise el conjunto");
 			return;
 		}
-
+		// {1,2,3,4,5}
 		string conjuntoStr = join(conjuntoElementos, ",");
 		conjuntoInicial = new string(conjuntoStr);
 		
