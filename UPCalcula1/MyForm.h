@@ -680,7 +680,7 @@ private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^
 	}
 	else pathExe /= "index.exe";
 	
-	string res = Run({ "start http://127.0.0.1:5000 &&", '"' + pathExe.string() + '', "&"});
+	string res = Run({ "start http://127.0.0.1:5000 &&", '"' + pathExe.string() + '"', "&"});
 	cout << res << endl;
 }
 
