@@ -117,11 +117,11 @@ namespace UPCalcula {
 			   this->RandomA = (gcnew System::Windows::Forms::Button());
 			   this->UPCalcular = (gcnew System::Windows::Forms::Button());
 			   this->panel1 = (gcnew System::Windows::Forms::Panel());
+			   this->btnConjCociente = (gcnew System::Windows::Forms::Button());
 			   this->btnDiagramar = (gcnew System::Windows::Forms::Button());
 			   this->button1 = (gcnew System::Windows::Forms::Button());
 			   this->clasifica = (gcnew System::Windows::Forms::Button());
 			   this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			   this->btnConjCociente = (gcnew System::Windows::Forms::Button());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			   this->panel1->SuspendLayout();
 			   this->SuspendLayout();
@@ -318,6 +318,22 @@ namespace UPCalcula {
 			   this->panel1->TabIndex = 13;
 			   this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel1_Paint);
 			   // 
+			   // btnConjCociente
+			   // 
+			   this->btnConjCociente->BackColor = System::Drawing::Color::Red;
+			   this->btnConjCociente->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->btnConjCociente->ForeColor = System::Drawing::Color::White;
+			   this->btnConjCociente->Location = System::Drawing::Point(127, 566);
+			   this->btnConjCociente->Margin = System::Windows::Forms::Padding(4);
+			   this->btnConjCociente->Name = L"btnConjCociente";
+			   this->btnConjCociente->Size = System::Drawing::Size(273, 73);
+			   this->btnConjCociente->TabIndex = 16;
+			   this->btnConjCociente->Text = L"Cociente";
+			   this->btnConjCociente->UseVisualStyleBackColor = false;
+			   this->btnConjCociente->Visible = false;
+			   this->btnConjCociente->Click += gcnew System::EventHandler(this, &MyForm::btnConjCociente_Click);
+			   // 
 			   // btnDiagramar
 			   // 
 			   this->btnDiagramar->BackColor = System::Drawing::Color::Red;
@@ -369,22 +385,6 @@ namespace UPCalcula {
 			   this->timer2->Enabled = true;
 			   this->timer2->Tick += gcnew System::EventHandler(this, &MyForm::timer2_Tick);
 			   // 
-			   // btnConjCociente
-			   // 
-			   this->btnConjCociente->BackColor = System::Drawing::Color::Red;
-			   this->btnConjCociente->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->btnConjCociente->ForeColor = System::Drawing::Color::White;
-			   this->btnConjCociente->Location = System::Drawing::Point(127, 566);
-			   this->btnConjCociente->Margin = System::Windows::Forms::Padding(4);
-			   this->btnConjCociente->Name = L"btnConjCociente";
-			   this->btnConjCociente->Size = System::Drawing::Size(273, 73);
-			   this->btnConjCociente->TabIndex = 16;
-			   this->btnConjCociente->Text = L"Cociente";
-			   this->btnConjCociente->UseVisualStyleBackColor = false;
-			   this->btnConjCociente->Visible = false;
-			   this->btnConjCociente->Click += gcnew System::EventHandler(this, &MyForm::btnConjCociente_Click);
-			   // 
 			   // MyForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
@@ -393,6 +393,7 @@ namespace UPCalcula {
 			   this->Controls->Add(this->panel1);
 			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"MyForm";
+			   this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			   this->Text = L"MyForm";
 			   this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -619,13 +620,22 @@ namespace UPCalcula {
 		System::Void clickBoton(System::Object^ sender, System::EventArgs^ e) {
 			Button^ Boton = safe_cast<Button^>(sender);
 			clasifica->Visible = true;
-			if (Boton->BackColor == SelectedColor) 
+			btnConjCociente->Visible = false;
+
+			String^ c = Boton->Text->ToString();
+			string convierteString = msclr::interop::marshal_as<string>(c);
+			string ptmrConvierteString = string(convierteString);
+
+			if (Boton->BackColor == SelectedColor) {
 				Boton->BackColor = Color::Transparent;
+				
+				string p1; p1.push_back(ptmrConvierteString[1]);
+				string p2; p2.push_back(ptmrConvierteString[3]);
+
+				relacion->erase({ p1, p2 });
+			}
 			else {
 				Boton->BackColor = SelectedColor;
-				String^ c = Boton->Text->ToString();
-				string convierteString = msclr::interop::marshal_as<string>(c);
-				string ptmrConvierteString = string(convierteString);
 				relacion->push_back(ptmrConvierteString);
 				*relacionStr += ',' + ptmrConvierteString;
 			}
@@ -670,7 +680,7 @@ private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^
 	}
 	else pathExe /= "index.exe";
 	
-	string res = Run({ "start http://127.0.0.1:5000 &&", pathExe.string(), "&"});
+	string res = Run({ "start http://127.0.0.1:5000 &&", '"' + pathExe.string() + '', "&"});
 	cout << res << endl;
 }
 
@@ -687,7 +697,7 @@ private: System::Void btnDiagramar_Click(System::Object^ sender, System::EventAr
 	cout << pathExe << endl;
 	try	{
 		Run({
-			pathExe.string(),
+			'"' + pathExe.string() + '"',
 			"-conjunto",
 			*conjuntoInicial,
 			"-relacion",
@@ -697,8 +707,10 @@ private: System::Void btnDiagramar_Click(System::Object^ sender, System::EventAr
 	} catch (const std::exception&) {}
 }
 private: System::Void btnConjCociente_Click(System::Object^ sender, System::EventArgs^ e) {
-	cout << relacion->conjuntoCociente(*relacion);
-
+	stringstream ss;
+	ss << relacion->conjuntoCociente(*relacion);
+	string conjunto_cociente_str = string(ss.str());
+	MessageBox::Show(gcnew String(("Conjunto Cociente:\n" + conjunto_cociente_str).c_str()));
 }
 };
 }

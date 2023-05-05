@@ -43,6 +43,7 @@ public:
     size_t size();
 
     bool include(std::pair<std::string, std::string>);
+    void erase(std::vector<std::string>);
     Conjunto conjuntoCociente(Conjunto&);
     conjuntoType::iterator begin();
     conjuntoType::iterator end();
@@ -169,6 +170,14 @@ bool Conjunto::include(elementoPair sub_conjunto) {
     return false;
 }
 
+void Conjunto::erase(std::vector<std::string> elemento) {
+    auto it = std::find(conjunto.begin(), conjunto.end(), elemento);
+
+    if (it != conjunto.end()) {
+        conjunto.erase(it);
+    }
+}
+
 bool Conjunto::esReflexiva(Conjunto &R) {
     for (auto elemento : conjunto) {
         if (!R.include(std::make_pair(elemento[0], elemento[0]))) {
@@ -257,35 +266,24 @@ Conjunto Conjunto::conjuntoCociente(Conjunto& R) {
         for (auto relacion: R)
         {
             if (relacion[0]==inicio[1])//quiero el a == conjunto en i
-            {
                 clase_equivalencia.insert(relacion[1]);//para el segundo
-            }
-            if (relacion[1]==inicio[1])//quiero el b ==conjunto en i
-            {
+
+            if (relacion[1]==inicio[1])//quiero el b ==conjunto en 
                 clase_equivalencia.insert(relacion[0]);//para el primero
-            }
         }
         conjunto_cociente.insert(clase_equivalencia);//la clase equivalencia se agrega al conjunto cociente
     }
-    std::cout << "conjunto cociente: { ";
-    for (auto it=conjunto_cociente.begin();it!=conjunto_cociente.end();it++)
-    {
-        std::cout << "{ ";
+    
+    std::vector<std::vector<std::string>> vec_conjunto;
+
+    for (auto it=conjunto_cociente.begin();it!=conjunto_cociente.end();it++) {
+        std::vector<std::string> elementos;
         for (auto t2 = it->begin(); t2 != it->end(); t2++)
-        {
-            std::cout << *t2;//imprime el elemento apuntado por t2
-            if (next(t2) != it->end())
-            {
-                std::cout << ",";
-            }
-        }std::cout << " }";
-        if (next(it)!=conjunto_cociente.end())
-        {
-            std::cout << ", ";
-        }
+            elementos.push_back(*t2);
+
+        vec_conjunto.push_back(elementos);
     }
-    std::cout << "} ";
-    return Conjunto();
+    return vec_conjunto;
 }
 
 void Conjunto::push_back(std::string elemento) {
