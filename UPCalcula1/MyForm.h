@@ -87,6 +87,7 @@ namespace UPCalcula {
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
 		string *conjuntoInicial = new string(), * relacionStr = new string();
+	private: System::Windows::Forms::Button^ btnConjCociente;
 	private: System::Windows::Forms::Button^ btnDiagramar;
 	private: System::Windows::Forms::Timer^ timer2;
 	private: System::Windows::Forms::Button^ clasifica;
@@ -115,10 +116,11 @@ namespace UPCalcula {
 			   this->RandomA = (gcnew System::Windows::Forms::Button());
 			   this->UPCalcular = (gcnew System::Windows::Forms::Button());
 			   this->panel1 = (gcnew System::Windows::Forms::Panel());
+			   this->btnDiagramar = (gcnew System::Windows::Forms::Button());
 			   this->button1 = (gcnew System::Windows::Forms::Button());
 			   this->clasifica = (gcnew System::Windows::Forms::Button());
 			   this->timer2 = (gcnew System::Windows::Forms::Timer(this->components));
-			   this->btnDiagramar = (gcnew System::Windows::Forms::Button());
+			   this->btnConjCociente = (gcnew System::Windows::Forms::Button());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			   this->panel1->SuspendLayout();
 			   this->SuspendLayout();
@@ -130,7 +132,7 @@ namespace UPCalcula {
 				   static_cast<System::Byte>(0)));
 			   this->inicio->ForeColor = System::Drawing::Color::White;
 			   this->inicio->Location = System::Drawing::Point(493, 427);
-			   this->inicio->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->inicio->Margin = System::Windows::Forms::Padding(4);
 			   this->inicio->Name = L"inicio";
 			   this->inicio->Size = System::Drawing::Size(231, 73);
 			   this->inicio->TabIndex = 1;
@@ -143,7 +145,7 @@ namespace UPCalcula {
 			   this->textBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox1->Location = System::Drawing::Point(257, 225);
-			   this->textBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox1->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox1->Multiline = true;
 			   this->textBox1->Name = L"textBox1";
 			   this->textBox1->Size = System::Drawing::Size(59, 54);
@@ -157,7 +159,7 @@ namespace UPCalcula {
 			   this->textBox2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox2->Location = System::Drawing::Point(375, 225);
-			   this->textBox2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox2->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox2->Multiline = true;
 			   this->textBox2->Name = L"textBox2";
 			   this->textBox2->Size = System::Drawing::Size(59, 54);
@@ -170,7 +172,7 @@ namespace UPCalcula {
 			   this->textBox3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox3->Location = System::Drawing::Point(493, 225);
-			   this->textBox3->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox3->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox3->Multiline = true;
 			   this->textBox3->Name = L"textBox3";
 			   this->textBox3->Size = System::Drawing::Size(59, 54);
@@ -183,7 +185,7 @@ namespace UPCalcula {
 			   this->textBox4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox4->Location = System::Drawing::Point(841, 225);
-			   this->textBox4->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox4->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox4->Multiline = true;
 			   this->textBox4->Name = L"textBox4";
 			   this->textBox4->Size = System::Drawing::Size(59, 54);
@@ -196,7 +198,7 @@ namespace UPCalcula {
 			   this->textBox5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox5->Location = System::Drawing::Point(723, 225);
-			   this->textBox5->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox5->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox5->Multiline = true;
 			   this->textBox5->Name = L"textBox5";
 			   this->textBox5->Size = System::Drawing::Size(59, 54);
@@ -209,7 +211,7 @@ namespace UPCalcula {
 			   this->textBox6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox6->Location = System::Drawing::Point(605, 225);
-			   this->textBox6->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox6->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox6->Multiline = true;
 			   this->textBox6->Name = L"textBox6";
 			   this->textBox6->Size = System::Drawing::Size(59, 54);
@@ -222,7 +224,7 @@ namespace UPCalcula {
 			   this->textBox7->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(0)));
 			   this->textBox7->Location = System::Drawing::Point(961, 225);
-			   this->textBox7->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->textBox7->Margin = System::Windows::Forms::Padding(4);
 			   this->textBox7->Multiline = true;
 			   this->textBox7->Name = L"textBox7";
 			   this->textBox7->Size = System::Drawing::Size(59, 54);
@@ -253,7 +255,7 @@ namespace UPCalcula {
 			   // 
 			   this->pictureBox1->BackColor = System::Drawing::Color::Transparent;
 			   this->pictureBox1->Location = System::Drawing::Point(179, 153);
-			   this->pictureBox1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->pictureBox1->Margin = System::Windows::Forms::Padding(4);
 			   this->pictureBox1->Name = L"pictureBox1";
 			   this->pictureBox1->Size = System::Drawing::Size(889, 250);
 			   this->pictureBox1->TabIndex = 10;
@@ -266,7 +268,7 @@ namespace UPCalcula {
 				   static_cast<System::Byte>(0)));
 			   this->RandomA->ForeColor = System::Drawing::Color::White;
 			   this->RandomA->Location = System::Drawing::Point(701, 427);
-			   this->RandomA->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->RandomA->Margin = System::Windows::Forms::Padding(4);
 			   this->RandomA->Name = L"RandomA";
 			   this->RandomA->Size = System::Drawing::Size(200, 73);
 			   this->RandomA->TabIndex = 11;
@@ -281,7 +283,7 @@ namespace UPCalcula {
 				   static_cast<System::Byte>(0)));
 			   this->UPCalcular->ForeColor = System::Drawing::Color::White;
 			   this->UPCalcular->Location = System::Drawing::Point(264, 427);
-			   this->UPCalcular->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->UPCalcular->Margin = System::Windows::Forms::Padding(4);
 			   this->UPCalcular->Name = L"UPCalcular";
 			   this->UPCalcular->Size = System::Drawing::Size(221, 73);
 			   this->UPCalcular->TabIndex = 12;
@@ -292,6 +294,7 @@ namespace UPCalcula {
 			   // panel1
 			   // 
 			   this->panel1->BackColor = System::Drawing::Color::LightGray;
+			   this->panel1->Controls->Add(this->btnConjCociente);
 			   this->panel1->Controls->Add(this->btnDiagramar);
 			   this->panel1->Controls->Add(this->button1);
 			   this->panel1->Controls->Add(this->clasifica);
@@ -308,46 +311,11 @@ namespace UPCalcula {
 			   this->panel1->Controls->Add(this->textBox1);
 			   this->panel1->Controls->Add(this->inicio);
 			   this->panel1->Location = System::Drawing::Point(4, 6);
-			   this->panel1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->panel1->Margin = System::Windows::Forms::Padding(4);
 			   this->panel1->Name = L"panel1";
 			   this->panel1->Size = System::Drawing::Size(1293, 667);
 			   this->panel1->TabIndex = 13;
 			   this->panel1->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &MyForm::panel1_Paint);
-			   // 
-			   // button1
-			   // 
-			   this->button1->BackColor = System::Drawing::Color::Red;
-			   this->button1->Font = (gcnew System::Drawing::Font(L"Impact", 20));
-			   this->button1->ForeColor = System::Drawing::Color::White;
-			   this->button1->Location = System::Drawing::Point(1067, 591);
-			   this->button1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
-			   this->button1->Name = L"button1";
-			   this->button1->Size = System::Drawing::Size(213, 53);
-			   this->button1->TabIndex = 14;
-			   this->button1->Text = L"Abrir Web";
-			   this->button1->UseVisualStyleBackColor = false;
-			   this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
-			   // 
-			   // clasifica
-			   // 
-			   this->clasifica->BackColor = System::Drawing::Color::Red;
-			   this->clasifica->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				   static_cast<System::Byte>(0)));
-			   this->clasifica->ForeColor = System::Drawing::Color::White;
-			   this->clasifica->Location = System::Drawing::Point(467, 566);
-			   this->clasifica->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
-			   this->clasifica->Name = L"clasifica";
-			   this->clasifica->Size = System::Drawing::Size(273, 73);
-			   this->clasifica->TabIndex = 13;
-			   this->clasifica->Text = L"CLASIFICAR";
-			   this->clasifica->UseVisualStyleBackColor = false;
-			   this->clasifica->Visible = false;
-			   this->clasifica->Click += gcnew System::EventHandler(this, &MyForm::clasifica_Click);
-			   // 
-			   // timer2
-			   // 
-			   this->timer2->Enabled = true;
-			   this->timer2->Tick += gcnew System::EventHandler(this, &MyForm::timer2_Tick);
 			   // 
 			   // btnDiagramar
 			   // 
@@ -365,13 +333,64 @@ namespace UPCalcula {
 			   this->btnDiagramar->Visible = false;
 			   this->btnDiagramar->Click += gcnew System::EventHandler(this, &MyForm::btnDiagramar_Click);
 			   // 
+			   // button1
+			   // 
+			   this->button1->BackColor = System::Drawing::Color::Red;
+			   this->button1->Font = (gcnew System::Drawing::Font(L"Impact", 20));
+			   this->button1->ForeColor = System::Drawing::Color::White;
+			   this->button1->Location = System::Drawing::Point(1067, 591);
+			   this->button1->Margin = System::Windows::Forms::Padding(4);
+			   this->button1->Name = L"button1";
+			   this->button1->Size = System::Drawing::Size(213, 53);
+			   this->button1->TabIndex = 14;
+			   this->button1->Text = L"Abrir Web";
+			   this->button1->UseVisualStyleBackColor = false;
+			   this->button1->Click += gcnew System::EventHandler(this, &MyForm::button1_Click_1);
+			   // 
+			   // clasifica
+			   // 
+			   this->clasifica->BackColor = System::Drawing::Color::Red;
+			   this->clasifica->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->clasifica->ForeColor = System::Drawing::Color::White;
+			   this->clasifica->Location = System::Drawing::Point(467, 566);
+			   this->clasifica->Margin = System::Windows::Forms::Padding(4);
+			   this->clasifica->Name = L"clasifica";
+			   this->clasifica->Size = System::Drawing::Size(273, 73);
+			   this->clasifica->TabIndex = 13;
+			   this->clasifica->Text = L"CLASIFICAR";
+			   this->clasifica->UseVisualStyleBackColor = false;
+			   this->clasifica->Visible = false;
+			   this->clasifica->Click += gcnew System::EventHandler(this, &MyForm::clasifica_Click);
+			   // 
+			   // timer2
+			   // 
+			   this->timer2->Enabled = true;
+			   this->timer2->Tick += gcnew System::EventHandler(this, &MyForm::timer2_Tick);
+			   // 
+			   // btnConjCociente
+			   // 
+			   this->btnConjCociente->BackColor = System::Drawing::Color::Red;
+			   this->btnConjCociente->Font = (gcnew System::Drawing::Font(L"Impact", 27.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				   static_cast<System::Byte>(0)));
+			   this->btnConjCociente->ForeColor = System::Drawing::Color::White;
+			   this->btnConjCociente->Location = System::Drawing::Point(127, 566);
+			   this->btnConjCociente->Margin = System::Windows::Forms::Padding(4);
+			   this->btnConjCociente->Name = L"btnConjCociente";
+			   this->btnConjCociente->Size = System::Drawing::Size(273, 73);
+			   this->btnConjCociente->TabIndex = 16;
+			   this->btnConjCociente->Text = L"Cociente";
+			   this->btnConjCociente->UseVisualStyleBackColor = false;
+			   this->btnConjCociente->Visible = false;
+			   this->btnConjCociente->Click += gcnew System::EventHandler(this, &MyForm::btnConjCociente_Click);
+			   // 
 			   // MyForm
 			   // 
 			   this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			   this->ClientSize = System::Drawing::Size(1297, 676);
 			   this->Controls->Add(this->panel1);
-			   this->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
+			   this->Margin = System::Windows::Forms::Padding(4);
 			   this->Name = L"MyForm";
 			   this->Text = L"MyForm";
 			   this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
@@ -630,6 +649,9 @@ namespace UPCalcula {
 
 				btnDiagramar->Visible = true;
 			}
+			else if (re == EQUIVALENCIA) {
+				btnConjCociente->Visible = true;
+			}
 			relaciones_str += tipos[re] + '\n';
 		}
 		String^ mensaje = gcnew String(relaciones_str.c_str());
@@ -671,6 +693,10 @@ private: System::Void btnDiagramar_Click(System::Object^ sender, System::EventAr
 			"--preview=1"
 		});
 	} catch (const std::exception&) {}
+}
+private: System::Void btnConjCociente_Click(System::Object^ sender, System::EventArgs^ e) {
+	cout << relacion->conjuntoCociente(*relacion);
+
 }
 };
 }
