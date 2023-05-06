@@ -85,6 +85,8 @@ namespace UPCalcula {
 		bool esOrdenParcial = false;
 		Color SelectedColor = Color::FromArgb(45, 212, 191);
 		Conjunto* conjunto=new Conjunto();
+		int cont = 0;
+		bool unlock = false;
 		System::Collections::Generic::List<Control^>^ controlList = gcnew System::Collections::Generic::List<Control^>();
 
 		string *conjuntoInicial = new string(), * relacionStr = new string();
@@ -93,7 +95,7 @@ namespace UPCalcula {
 	private: System::Windows::Forms::Timer^ timer2;
 	private: System::Windows::Forms::Button^ clasifica;
 	private: System::Windows::Forms::Button^ button1;
-		   int cont;
+	
 
 #pragma region Windows Form Designer generated code
 		   /// <summary>
@@ -436,9 +438,18 @@ namespace UPCalcula {
 	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void textBox1_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
-		if ((textBox1->Text != textBox1->Text->Empty)) {//si tienne contenido entonces muestra la siguiente casilla
+		if (textBox1->Text != textBox1->Text->Empty) {//si tienne contenido entonces muestra la siguiente casilla
 			textBox2->Visible = true; textBox2->Focus();
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e) {
 
@@ -446,67 +457,185 @@ namespace UPCalcula {
 	private: System::Void textBox2_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 		if ((textBox2->Text != textBox2->Text->Empty)) {
 			textBox3->Visible = true; textBox3->Focus();
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
 	private: System::Void textBox3_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 		if ((textBox3->Text != textBox3->Text->Empty)) {
 			textBox6->Visible = true; textBox6->Focus();
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
 	private: System::Void textBox6_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
 		if ((textBox6->Text != textBox6->Text->Empty)) {
-			textBox5->Visible = true; textBox5->Focus(); UPCalcular->Visible = true;
+			textBox5->Visible = true; textBox5->Focus(); 
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
 	private: System::Void textBox5_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if ((textBox5->Text != textBox5->Text->Empty)) {
 			textBox4->Visible = true; textBox4->Focus();
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
-	private: System::Void textBox7_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {}
+	private: System::Void textBox7_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if ((textBox7->Text != textBox7->Text->Empty)) {
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+			
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
+		}
+		cout << cont;
+	}
 	private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		if ((textBox4->Text != textBox4->Text->Empty)) {
 			textBox7->Visible = true; textBox7->Focus();
+			cont++;
+			unlock = (cont >= 4) ? true : false;
+			if (unlock) {
+
+				UPCalcular->Visible = true;
+			}
+			else if (!unlock) {
+				UPCalcular->Visible = false;
+			}
 		}
+		cout << cont;
 	}
 	private: System::Void textBox1_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox1->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox1->Text->Length == 1 && e->KeyChar == 8) { textBox1->Clear(); }
+		if (textBox1->Text->Length == 1 && e->KeyChar == 8) { textBox1->Clear(); cont--;
+		unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 	private: System::Void textBox2_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox2->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox2->Text->Length == 1 && e->KeyChar == 8) { textBox2->Clear(); }
+		if (textBox2->Text->Length == 1 && e->KeyChar == 8) { textBox2->Clear(); cont--; 
+		unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 	private: System::Void textBox3_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox3->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox3->Text->Length == 1 && e->KeyChar == 8) { textBox3->Clear(); }
+		if (textBox3->Text->Length == 1 && e->KeyChar == 8) { textBox3->Clear(); cont--; 	unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 	private: System::Void textBox6_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox6->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox6->Text->Length == 1 && e->KeyChar == 8) { textBox6->Clear(); }
+		if (textBox6->Text->Length == 1 && e->KeyChar == 8) { textBox6->Clear(); cont--; 	unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 	private: System::Void textBox5_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox5->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox5->Text->Length == 1 && e->KeyChar == 8) { textBox5->Clear(); }
+		if (textBox5->Text->Length == 1 && e->KeyChar == 8) { textBox5->Clear(); cont--;	unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 
 	private: System::Void textBox4_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox4->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox4->Text->Length == 1 && e->KeyChar == 8) { textBox4->Clear(); }
+		if (textBox4->Text->Length == 1 && e->KeyChar == 8) { textBox4->Clear(); cont--; 	unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 
 	private: System::Void textBox7_KeyPress(System::Object^ sender, System::Windows::Forms::KeyPressEventArgs^ e) {
 		if (!Char::IsLetterOrDigit(e->KeyChar)) { e->Handled = true; }
 		if (textBox7->Text->Length >= 1 && e->KeyChar != 8) { e->Handled = true; }
-		if (textBox7->Text->Length == 1 && e->KeyChar == 8) { textBox7->Clear(); }
+		if (textBox7->Text->Length == 1 && e->KeyChar == 8) { textBox7->Clear(); cont--; 	unlock = (cont >= 4) ? true : false;
+		if (unlock) {
+			UPCalcular->Visible = true;
+		}
+		else if (!unlock) {
+			UPCalcular->Visible = false;
+		}
+		}
+		cout << cont;
 	}
 	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		cont = 7;
 		set<int> Numerosusads;
 		set<char> Charsusados;
 
@@ -667,6 +796,7 @@ namespace UPCalcula {
 		}
 		String^ mensaje = gcnew String(relaciones_str.c_str());
 		MessageBox::Show(mensaje);
+		btnConjCociente->Visible = true;
 	}
 private: System::Void button1_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	filesystem::path pathExe = filesystem::current_path();
